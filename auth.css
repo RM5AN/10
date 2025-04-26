@@ -1,0 +1,237 @@
+.auth-container {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: var(--gray-100);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: right;
+}
+
+.auth-card h1 {
+    color: var(--gray-700);
+    margin-bottom: 25px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.auth-description {
+    color: var(--gray-500);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--gray-600);
+    font-size: 14px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #f8f8f8;
+}
+
+.input-group input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(64, 64, 64, 0.2);
+    outline: none;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    color: var(--gray-400);
+    font-size: 16px;
+}
+
+.toggle-password {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: var(--accent-color);
+}
+
+.auth-button {
+    padding: 12px 20px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.auth-button:hover {
+    background-color: var(--text-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.forgot-link {
+    color: var(--gray-500);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.forgot-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.register-link, .login-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.register-link span, .login-link span {
+    color: var(--gray-500);
+    font-size: 14px;
+}
+
+.register-link a, .login-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.register-link a:hover, .login-link a:hover {
+    text-decoration: underline;
+    color: var(--text-color);
+}
+
+/* تنسيقات للشاشات المتوسطة والصغيرة */
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 25px 20px;
+    }
+    
+    .auth-card h1 {
+        font-size: 22px;
+    }
+    
+    .auth-button {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 20px 15px;
+    }
+    
+    .auth-card {
+        padding: 20px 15px;
+    }
+    
+    .auth-card h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .input-group input {
+        padding: 10px 12px;
+    }
+    
+    .auth-button {
+        padding: 10px;
+        font-size: 15px;
+    }
+}
+
+/* تنسيقات إضافية للتوافق مع التصميم العام للموقع */
+.auth-container {
+    background-color: var(--gray-100);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.auth-card {
+    border: 1px solid var(--gray-200);
+}
+
+.auth-card h1 {
+    color: var(--gray-700);
+    font-weight: 600;
+}
+
+.input-group input {
+    border: 1px solid var(--gray-200);
+}
+
+.input-group input:focus {
+    border-color: var(--accent-color);
+}
+
+/* تنسيقات للأيقونات داخل حقول الإدخال */
+.input-group i:not(.toggle-password) {
+    color: var(--accent-color);
+}
+
+/* تأثير التحويم على الأزرار */
+.auth-button:hover {
+    background-color: var(--text-color);
+}
+
+/* تنسيقات للروابط */
+.auth-links a {
+    color: var(--accent-color);
+}
+
+.auth-links a:hover {
+    color: var(--text-color);
+} 

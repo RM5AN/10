@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShotSpot - إنشاء حساب جديد</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.target.src = 'https://via.placeholder.com/150?text=ShotSpot';
+            }
+        }, true);
+    </script>
+    <style>
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-icon, .heart-icon {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
+                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+                    <img src="camera-logo.png" alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+                </a>
+            </div>
+
+            <div class="main-menu">
+                <a href="index.html">الصفحة الرئيسية</a>
+                <a href="about.html">من نحن</a>
+                <a href="services.html">خدماتنا</a>
+                <a href="contact.html">تواصل معنا</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="icons-group">
+                    <div class="account-dropdown">
+                        <a href="login.html" class="user-icon active">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="account-menu">
+                            <a href="login.html">تسجيل الدخول</a>
+                            <a href="register.html" class="active">حساب جديد</a>
+                            <a href="rent-request.html">طلب تأجير</a>
+                        </div>
+                    </div>
+                    <a href="favorites.html" class="heart-icon">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="ابحث عن منتجات...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h1>إنشاء حساب جديد</h1>
+                    
+                    <form class="auth-form">
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <div class="input-group">
+                                <input type="text" placeholder="أدخل الاسم الكامل">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <div class="input-group">
+                                <input type="email" placeholder="أدخل البريد الإلكتروني">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>كلمة المرور</label>
+                            <div class="input-group">
+                                <input type="password" placeholder="أدخل كلمة المرور">
+                                <i class="fas fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>تأكيد كلمة المرور</label>
+                            <div class="input-group">
+                                <input type="password" placeholder="أعد إدخال كلمة المرور">
+                                <i class="fas fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="auth-button">إنشاء حساب</button>
+                        
+                        <div class="auth-links">
+                            <div class="login-link">
+                                <span>لديك حساب بالفعل؟</span>
+                                <a href="login.html">تسجيل الدخول</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShotSpot</h3>
+                <p>متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <p>
+                    <i class="fas fa-phone"></i>
+                    +966 11 234 5678
+                </p>
+                <p>
+                    <i class="fas fa-envelope"></i>
+                    info@ShotSpot.sa
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3>وسائل الدفع</h3>
+                <div class="payment-methods-footer">
+                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+    function changeLang(lang) {
+        localStorage.setItem('selectedLang', lang);
+        
+        if (lang === 'en') {
+            window.location.href = window.location.pathname + '?lang=en';
+        } else {
+            window.location.href = window.location.pathname + '?lang=ar';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectedLang = localStorage.getItem('selectedLang') || 'ar';
+        const langLinks = document.querySelectorAll('.language-switch a');
+        
+        langLinks.forEach(link => {
+            if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(selectedLang)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // إضافة وظيفة إظهار/إخفاء كلمة المرور
+        const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+        
+        togglePasswordButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // تفعيل القائمة المنسدلة للحساب
+        const accountIcon = document.querySelector('.account-dropdown .user-icon');
+        const accountMenu = document.querySelector('.account-dropdown .account-menu');
+        
+        if (accountIcon && accountMenu) {
+            accountIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+                accountMenu.classList.toggle('active');
+            });
+            
+            // إغلاق القائمة عند النقر خارجها
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.account-dropdown')) {
+                    accountMenu.classList.remove('active');
+                }
+            });
+        }
+
+        // التحقق من تطابق كلمات المرور
+        const registerForm = document.querySelector('.auth-form');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                const password = document.querySelector('input[type="password"]:nth-of-type(1)');
+                const confirmPassword = document.querySelector('input[type="password"]:nth-of-type(2)');
+                
+                if (password && confirmPassword && password.value !== confirmPassword.value) {
+                    e.preventDefault();
+                    alert('كلمات المرور غير متطابقة، يرجى المحاولة مرة أخرى.');
+                }
+            });
+        }
+
+        updateCartCount();
+    });
+
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalQuantity = 0;
+        cart.forEach(item => {
+            totalQuantity += item.quantity || 1;
+        });
+
+        let cartCount = document.querySelector('.cart-count');
+        if (!cartCount) {
+            const icon = document.querySelector('.cart-icon');
+            cartCount = document.createElement('span');
+            cartCount.className = 'cart-count';
+            icon.appendChild(cartCount);
+        }
+        cartCount.textContent = totalQuantity;
+        cartCount.style.display = totalQuantity > 0 ? 'flex' : 'none';
+    }
+    </script>
+</body>
+</html> 

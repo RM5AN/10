@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الشراء - ShotSpot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .checkout-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 25px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .page-title {
+            text-align: center;
+            color: var(--gray-700);
+            margin-bottom: 20px;
+            font-size: 22px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--gray-400);
+        }
+        .checkout-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .form-section {
+            padding: 20px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            background-color: white;
+        }
+        .form-section h2 {
+            text-align: right;
+            color: var(--gray-700);
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--gray-500);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+        }
+        .payment-methods {
+            margin-top: 15px;
+        }
+        .payment-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .payment-method:hover {
+            background-color: var(--gray-100);
+        }
+        .payment-method input {
+            margin-left: 10px;
+        }
+        .payment-method img {
+            height: 24px;
+            margin-right: 10px;
+        }
+        .order-summary {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            background-color: white;
+        }
+        .order-summary h2 {
+            text-align: right;
+            color: var(--gray-700);
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .order-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .order-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-left: 10px;
+        }
+        .order-item-details {
+            flex-grow: 1;
+        }
+        .order-item-details h3 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+        .order-item-details p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-200);
+            font-weight: bold;
+            color: var(--gray-700);
+        }
+        .checkout-button {
+            background: var(--gray-800);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .checkout-button:hover {
+            background: var(--gray-900);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .checkout-sections {
+                grid-template-columns: 1fr;
+            }
+            .checkout-container {
+                padding: 15px;
+            }
+        }
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        .cart-icon, .heart-icon {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
+                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+                    <alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+                </a>
+            </div>
+
+            <div class="main-menu">
+                <a href="index.html">الصفحة الرئيسية</a>
+                <a href="about.html">من نحن</a>
+                <a href="services.html">خدماتنا</a>
+                <a href="contact.html">تواصل معنا</a>
+                <a href="cart.html">السلة</a>
+                <a href="checkout.html" class="active">إتمام الشراء</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="icons-group">
+                    <div class="account-dropdown">
+                        <a href="login.html" class="user-icon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="account-menu">
+                            <a href="login.html">تسجيل الدخول</a>
+                            <a href="register.html">حساب جديد</a>
+                            <a href="rent-request.html">طلب تأجير</a>
+                        </div>
+                    </div>
+                    <a href="favorites.html" class="heart-icon">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="ابحث عن منتجات...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container checkout-container">
+            <h1 class="page-title">إتمام الشراء</h1>
+            
+            <div class="checkout-sections">
+                <div class="form-section">
+                    <h2>معلومات الشحن</h2>
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل</label>
+                        <input type="text" id="name" placeholder="أدخل الاسم الكامل">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" placeholder="أدخل البريد الإلكتروني">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف</label>
+                        <input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">العنوان</label>
+                        <input type="text" id="address" placeholder="أدخل العنوان بالتفصيل">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">المدينة</label>
+                        <input type="text" id="city" placeholder="أدخل اسم المدينة">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>طريقة الدفع</h2>
+                    <div class="payment-methods">
+                        <div class="payment-method">
+                            <input type="radio" id="credit-card" name="payment" checked>
+                            <label for="credit-card">بطاقة ائتمان</label>
+                            <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                        </div>
+                    </div>
+                    
+                    <div id="credit-card-details">
+                        <div class="form-group">
+                            <label for="card-number">رقم البطاقة</label>
+                            <input type="text" id="card-number" placeholder="أدخل رقم البطاقة">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-name">الاسم على البطاقة</label>
+                            <input type="text" id="card-name" placeholder="أدخل الاسم كما هو على البطاقة">
+                        </div>
+                        <div class="form-group">
+                            <label for="expiry">تاريخ الانتهاء</label>
+                            <input type="text" id="expiry" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">رمز الأمان (CVV)</label>
+                            <input type="text" id="cvv" placeholder="CVV">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="order-summary">
+                <h2>ملخص الطلب</h2>
+                <p style="text-align: center; padding: 20px 0; color: #666;">لا توجد منتجات في سلة التسوق</p>
+                <div class="order-total">
+                    <span>المجموع الكلي:</span>
+                    <span>0 ريال سعودي</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShotSpot</h3>
+                <p>متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <p>
+                    <i class="fas fa-phone"></i>
+                    +966 11 234 5678
+                </p>
+                <p>
+                    <i class="fas fa-envelope"></i>
+                    info@ShotSpot.sa
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3>وسائل الدفع</h3>
+                <div class="payment-methods-footer">
+                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        function changeLang(lang) {
+            // حفظ اللغة المختارة في localStorage
+            localStorage.setItem('selectedLang', lang);
+            
+            // تحديث الصفحة مع اللغة الجديدة
+            if (lang === 'en') {
+                window.location.href = window.location.pathname + '?lang=en';
+            } else {
+                window.location.href = window.location.pathname + '?lang=ar';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedLang = localStorage.getItem('selectedLang') || 'ar';
+            const langLinks = document.querySelectorAll('.language-switch a');
+            
+            langLinks.forEach(link => {
+                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(selectedLang)) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // تفعيل القائمة المنسدلة للحساب
+            const accountIcon = document.querySelector('.account-dropdown .user-icon');
+            const accountMenu = document.querySelector('.account-dropdown .account-menu');
+            
+            if (accountIcon && accountMenu) {
+                accountIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    accountMenu.classList.toggle('active');
+                });
+                
+                // إغلاق القائمة عند النقر خارجها
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.account-dropdown')) {
+                        accountMenu.classList.remove('active');
+                    }
+                });
+            }
+
+            // تبديل طرق الدفع
+            const creditCardRadio = document.getElementById('credit-card');
+            const creditCardDetails = document.getElementById('credit-card-details');
+            
+            // إضافة تأثير التحديد لطرق الدفع
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            paymentMethods.forEach(method => {
+                const radio = method.querySelector('input[type="radio"]');
+                if (radio.checked) {
+                    method.classList.add('selected');
+                }
+                
+                radio.addEventListener('change', function() {
+                    paymentMethods.forEach(m => m.classList.remove('selected'));
+                    if (this.checked) {
+                        method.classList.add('selected');
+                    }
+                });
+            });
+            
+            if (creditCardRadio && creditCardDetails) {
+                creditCardRadio.addEventListener('change', function() {
+                    creditCardDetails.style.display = 'block';
+                });
+            }
+
+            // تفعيل زر تأكيد الطلب
+            const checkoutButton = document.querySelector('.checkout-button');
+            if (checkoutButton) {
+                checkoutButton.addEventListener('click', function() {
+                    // التحقق من صحة البيانات
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const address = document.getElementById('address').value;
+                    const city = document.getElementById('city').value;
+                    
+                    if (!name || !email || !phone || !address || !city) {
+                        alert('يرجى ملء جميع حقول معلومات الشحن');
+                        return;
+                    }
+                    
+                    if (creditCardRadio.checked) {
+                        const cardNumber = document.getElementById('card-number').value;
+                        const cardName = document.getElementById('card-name').value;
+                        const expiry = document.getElementById('expiry').value;
+                        const cvv = document.getElementById('cvv').value;
+                        
+                        if (!cardNumber || !cardName || !expiry || !cvv) {
+                            alert('يرجى ملء جميع حقول بيانات البطاقة');
+                            return;
+                        }
+                    }
+                    
+                    // إرسال الطلب (في تطبيق حقيقي سيتم إرسال البيانات إلى الخادم)
+                    alert('تم تأكيد طلبك بنجاح! سيتم توجيهك إلى صفحة التأكيد.');
+                    
+                    // توجيه المستخدم إلى صفحة تأكيد الطلب
+                    // window.location.href = 'order-confirmation.html';
+                });
+            }
+
+            // التأكد من أن أيقونة القلب تؤدي إلى صفحة المفضلة
+            const heartIcon = document.querySelector('.heart-icon');
+            if (heartIcon) {
+                heartIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'favorites.html';
+                });
+            }
+
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                let totalQuantity = 0;
+                cart.forEach(item => {
+                    totalQuantity += item.quantity || 1;
+                });
+
+                let cartCount = document.querySelector('.cart-count');
+                if (!cartCount) {
+                    const icon = document.querySelector('.cart-icon');
+                    cartCount = document.createElement('span');
+                    cartCount.className = 'cart-count';
+                    icon.appendChild(cartCount);
+                }
+                cartCount.textContent = totalQuantity;
+                cartCount.style.display = totalQuantity > 0 ? 'flex' : 'none';
+            }
+
+            // تحديث عداد السلة عند تحميل الصفحة
+            updateCartCount();
+        });
+    </script>
+</body>
+</html> 

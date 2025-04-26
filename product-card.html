@@ -1,0 +1,22 @@
+<!-- نموذج لبطاقة المنتج مع زر المفضلة وزر السلة -->
+<div class="product-card" data-id="{{ product.id }}">
+    <div class="product-image">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <button class="wishlist-btn" data-product-id="{{ product.id }}">
+            <i class="{% if product in user.wishlist_set.all %}fas{% else %}far{% endif %} fa-heart"></i>
+        </button>
+    </div>
+    <div class="product-info">
+        <h3>{{ product.name }}</h3>
+        <div class="product-specs">{{ product.description|truncatewords:10 }}</div>
+        <div class="price">{{ product.price }} ريال</div>
+        <button class="add-to-cart" data-product-id="{{ product.id }}">
+            <i class="fas fa-shopping-cart"></i> إضافة إلى السلة
+        </button>
+
+<button class="view-details-btn" data-product-id="{{ product.id }}">
+    <i class="fas fa-search-plus"></i> عرض التفاصيل
+</button>
+
+    </div>
+</div> 

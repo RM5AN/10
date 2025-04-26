@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المفضلة - ShotSpot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .favorites-page {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 60px;
+        }
+
+        .camera-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .camera-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .camera-image {
+            position: relative;
+            height: 180px;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .camera-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            padding: 20px;
+        }
+
+        .camera-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #165b8a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .camera-info {
+            padding: 20px;
+        }
+
+        .camera-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.4;
+        }
+
+        .camera-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+            color: #666;
+            font-size: 13px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .camera-specs span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .camera-price {
+            font-weight: bold;
+            color: #165b8a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .camera-price::before {
+            content: "";
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Saudi_Riyal.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-right: 5px;
+        }
+
+        .camera-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .camera-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart {
+            background: #165b8a;
+            color: white;
+        }
+
+        .remove-from-favorites {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        .add-to-cart:hover {
+            background: #134a6d;
+        }
+
+        .remove-from-favorites:hover {
+            background: #e9ecef;
+        }
+
+        .empty-favorites {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .empty-favorites i {
+            font-size: 48px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .favorites-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+
+            .camera-image {
+                height: 200px;
+            }
+        }
+
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-icon, .heart-icon {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
+                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+                    <alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+                </a>
+            </div>
+
+            <div class="main-menu">
+                <a href="index.html">الصفحة الرئيسية</a>
+                <a href="about.html">من نحن</a>
+                <a href="services.html">خدماتنا</a>
+                <a href="contact.html">تواصل معنا</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="icons-group">
+                    <div class="account-dropdown">
+                        <a href="#" class="user-icon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="account-menu">
+                            <a href="login.html">تسجيل الدخول</a>
+                            <a href="register.html">حساب جديد</a>
+                            <a href="rent-request.html">طلب تأجير</a>
+                        </div>
+                    </div>
+                    <a href="favorites.html" class="heart-icon">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="ابحث عن منتجات...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="favorites-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>المفضلة</h1>
+                <p>المنتجات التي قمت بإضافتها إلى المفضلة</p>
+            </div>
+
+            <!-- Favorites Grid -->
+            <section class="favorites-grid" id="favoritesGrid">
+                <!-- سيتم إضافة المنتجات هنا عن طريق JavaScript -->
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShotSpot</h3>
+                <p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <p><i class="fas fa-phone"></i> +966 11 234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>وسائل الدفع</h3>
+                <div class="payment-methods-footer">
+                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const favoritesGrid = document.getElementById('favoritesGrid');
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+            if (favorites.length === 0) {
+                favoritesGrid.innerHTML = `
+                    <div class="empty-favorites">
+                        <i class="fas fa-heart"></i>
+                        <p>لا توجد منتجات في المفضلة</p>
+                    </div>
+                `;
+                return;
+            }
+
+            favorites.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'camera-card';
+                productCard.innerHTML = `
+                    <div class="camera-image">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="camera-badge">مفضل</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">${product.name}</h3>
+                        <div class="camera-price">${product.price}</div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart" onclick="addToCart('${product.name}', '${product.price}', '${product.image}')">
+                                <i class="fas fa-shopping-cart"></i> إضافة للسلة
+                            </button>
+                            <button class="remove-from-favorites" onclick="removeFromFavorites('${product.name}')">
+                                <i class="fas fa-heart" style="color: #e74c3c;"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                favoritesGrid.appendChild(productCard);
+            });
+        });
+
+        function addToCart(name, price, image) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find(item => item.name === name);
+            
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showNotification('تمت إضافة المنتج إلى السلة بنجاح', 'success');
+        }
+
+        function removeFromFavorites(name) {
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            favorites = favorites.filter(item => item.name !== name);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // تحديث العرض
+            const favoritesGrid = document.getElementById('favoritesGrid');
+            if (favorites.length === 0) {
+                favoritesGrid.innerHTML = `
+                    <div class="empty-favorites">
+                        <i class="fas fa-heart"></i>
+                        <p>لا توجد منتجات في المفضلة</p>
+                    </div>
+                `;
+            } else {
+                // إعادة تحميل الصفحة لعرض التغييرات
+                location.reload();
+            }
+            
+            showNotification('تمت إزالة المنتج من المفضلة', 'info');
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalQuantity = 0;
+            cart.forEach(item => {
+                totalQuantity += item.quantity || 1;
+            });
+
+            let cartCount = document.querySelector('.cart-count');
+            if (!cartCount) {
+                const icon = document.querySelector('.cart-icon');
+                cartCount = document.createElement('span');
+                cartCount.className = 'cart-count';
+                icon.appendChild(cartCount);
+            }
+            cartCount.textContent = totalQuantity;
+            cartCount.style.display = totalQuantity > 0 ? 'flex' : 'none';
+        }
+
+        // تحديث عداد السلة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html> 
